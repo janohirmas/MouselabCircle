@@ -1,0 +1,24 @@
+{% extends "global/SliderTemplate.html" %}
+
+{{ block app_styles }}
+<link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+
+<style>
+
+</style>
+{{ endblock }}
+
+{% block app_scripts %}
+
+<script>
+  const lSolutions    =  ['b'];     // Solutions for Check-up questions in the last slide
+
+  function ValidateSaveSubmit() {
+    validateAnswers();
+    // sendSelect();
+  }
+
+  
+</script>
+
+{% endblock %}

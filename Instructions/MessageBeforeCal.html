@@ -1,0 +1,29 @@
+{% extends "global/Notifications.html" %}
+
+
+
+{% block app_scripts %}
+    <script>
+        var oKey;
+        document.addEventListener("DOMContentLoaded", function() {
+            bCond = false;
+        });
+        document.addEventListener('keydown', (e)=>{
+            oKey = e;
+            let bCtrlAlt = e.altKey && e.ctrlKey;
+            let bK = e.key === 'k' || e.key === 'K';
+            if (bCtrlAlt && bK  ) {
+                bCond = true;
+                Message = document.getElementById('msg-before');
+                Message.innerHTML = 'The calibration will start shortly. <br> Please sit straight and try not to move much throughout the experiment.  <br> Remember, the keys for left and right are A and D.  <br> The key to proceed is "Enter"  <br> When you are ready, press "Enter".';
+            }
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+<link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+
+{{ block content }}
+
+<div>
+    <p> 
+        Thank you for participating in our experiment! <br> 
+        We have randomly selected one round for each block of decisions. <br>
+        On the first block:
+    </p>
+    <ul>
+        <li> The choice selected was round number {{ round1 }} </li>
+        <li> The score of that applicant was {{ RightValue1 }} </li>
+        <li> The score you selected was {{ AnsValue1 }} </li>
+    </ul>
+    <p> On the second block: </p>
+    <ul>
+        <li> The choice selected was round number {{ round2 }} </li>
+        <li> The score of that applicant was {{ RightValue2 }} </li>
+        <li> The score you selected was {{ AnsValue2 }} </li>
+    </ul>
+    <p> Your final bonus payment is {{ payoff }} euros. </p>
+    <p> Once you are finished, please exit the room in silence. </p>
+</div>
+{{ endblock }}
+
+

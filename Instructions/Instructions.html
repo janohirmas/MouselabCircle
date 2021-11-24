@@ -1,0 +1,48 @@
+{% extends "global/SliderTemplate.html" %}
+
+{{ block app_styles }}
+<link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+
+<style>
+  .img-example {
+    width: 40vw;
+    height: auto;
+}
+</style>
+{{ endblock }}
+
+{% block app_scripts %}
+
+<script src="{% static 'global/js/FriendlyChecks.js' %}"></script>
+<script>
+  const lSolutions    =  ['2', 'a', 'b','c'];     // Solutions for Check-up questions in the last slide
+  const bRequireFS    = js_vars.bRequireFS;
+  const bCheckFocus   = js_vars.bCheckFocus;
+  const defaultPixel  = js_vars.dPixelRatio;
+  var bClickHere      = false;                // This is a condition for slide 4
+  var TBlur           = new Date().getTime();
+  var TFocus          = new Date().getTime();
+
+  // When page is loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    let body = document.getElementById('IntroContent');
+    InitializeFriendlyChecks(body, bRequireFS,bCheckFocus);             // Initialize FS and focus checks
+    InitializeVT(body);                                                 // Initialize visual tracing
+    hideEverything();                                                   // Hide Everything at the beginning                     
+    let dropdown = document.getElementById('sTreesLocation');
+    dropdown.onclick = () => {
+      let input = document.getElementById('bClickedLocation');
+      input.value = true;
+    };
+  });
+
+
+  function ValidateSaveSubmit() {
+    validateAnswers();
+    // sendSelect();
+  }
+
+  
+</script>
+
+{% endblock %}

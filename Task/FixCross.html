@@ -1,0 +1,42 @@
+{{ extends "global/Page.html" }}
+
+{{ block scripts }}
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        let dJitterTime = 1000 + Math.random()*2000;
+        window.setTimeout(()=>{
+            endPage();
+        },dJitterTime);
+    });
+</script>
+{{ endblock }}
+
+{{ block styles }}
+
+<style>
+
+
+    #fix-cross {
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+        transform: translate(-50%,-50%);
+        font-size: 10vh;
+        color: black;
+    }
+
+
+</style>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="screen-content">
+    <div id="fix-cross"> + </div>
+</div>
+<input type="hidden" id="sStart" name="sStartCross">
+<input type="hidden" id="sEnd" name="sEndCross">
+<button id='next-btn'> </button>
+
+
+{{ endblock }}

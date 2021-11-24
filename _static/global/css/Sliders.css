@@ -1,0 +1,304 @@
+/* SETUP FONT SIZES */
+
+
+/* CSS STYLESHEET FOR ECOLABELS EXPERIMENT */
+ 
+/* GLOBAL STYLING */
+/* :root {
+    --background-title : #547478;
+    --color-title: #fff;
+    --background-btn: #776183;
+    --color-btn: #fff;
+    --background-input: #f1f1f1;
+    --color-dot: #bbb;
+    --color-dot-hover: #717171;
+    --color-font: #547478;
+    --background-body: #aba9bf;
+    --background-slide: #cce8e9;
+  } */
+
+  :root {
+    --color1: #EDE7DC;
+    --color2: #BDC3CB;
+    --color3: #CCAFA5;
+    --color4: #DCD2CC;
+    --color5: #C0C0C0;
+    --color6:  #6C6A61;
+    --color7:  #2e4db4;
+    --color7b:  #284196;
+    --color8:  #C0C9CC;
+    --color9: #F2F1F0;
+    --color10: #171515;
+    --background-title : var(--color6);
+    --color-title: var(--color9);
+    --background-btn: var(--color7);
+    --background-btn-hover: var(--color7b);
+    --color-btn: var(--color9);
+    --background-input: var(--color9);
+    --background-input-hover: var(--color1);
+    --color-dot: var(--color5);
+    --color-dot-hover: var(--color6);
+    --color-font: var(--color10);
+    --background-body: var(--color1);
+    --background-slide: var(--color9);
+}
+
+body {
+    background-color: var(--background-body);
+    overflow: hidden;
+}
+
+/* oTree divs */ 
+.otree-body {
+    margin: 0;
+    padding: 0;
+}
+
+
+.debug-info {
+    display:none;
+}
+
+/* titles */
+h1 {
+    font-size: 2em;
+    text-align: center;
+    padding: 1em;
+    margin: 0;
+    background-color: var(--background-title);
+    color: var(--color-title);
+    flex-grow: 1;
+}
+
+/* Next & submit button */
+:root {
+    --color1: #EDE7DC;
+    --color2: #BDC3CB;
+    --color3: #CCAFA5;
+    --color4: #DCD2CC;
+    --color5: #C0C0C0;
+    --color6:  #6C6A61;
+    --color7:  #2e4db4;
+    --color7b:  #284196;
+    --color8:  #C0C9CC;
+    --color9: #F2F1F0;
+    --color10: #171515;
+    --background-title : var(--color6);
+    --color-title: var(--color9);
+    --background-btn: var(--color7);
+    --background-btn-hover: var(--color7b);
+    --color-btn: var(--color9);
+    --background-input: var(--color9);
+    --background-input-hover: var(--color1);
+    --color-dot: var(--color5);
+    --color-dot-hover: var(--color6);
+    --color-font: var(--color10);
+    --background-body: var(--color1);
+    --background-slide: var(--color9);
+}
+
+
+.button:hover {
+    background-color: var(--background-btn);
+    color: var(--color-btn);
+}
+
+/* Input fields */
+input {
+    border: 1px solid transparent;
+    background-color: var(--background-input);
+    padding: 10px;
+    font-size: 2.5vh;
+}
+
+
+
+/* This is for autocomplete dropdown */
+input[type=text] {
+    background-color: var(--background-input);
+    width: 5em;
+    border: solid black 1px;
+    border-radius: 3px;
+}
+
+/* Checkbox styling for ticked/unticked */ 
+
+input[type="checkbox"]:required:valid + label { 
+    color:    var(--background-btn);
+}
+
+/* INTRODUCTION & INSTRUCTIONS */
+.IntroContent {
+    transform: translate(-50vw,-50vh);
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    height: 100vh;
+    width: 100vw; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Slide container */
+.mySlides {
+    display: flex;
+    flex-flow: row;
+    height: 80vh;
+    width: 70vw;
+    margin: 0 1em;
+    justify-content: center;
+    align-content: center;
+}
+
+/* Slides */
+.slide-item {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;    
+    height: --var 80vh;
+    width: 80vw;
+    overflow: hidden;
+    background-color: var(--background-slide);
+    color: var(--color-font);
+    font-size: 1.5em;
+    line-height: 1.5;
+    margin-bottom: 2vh;
+    text-align: left;
+}
+
+.page-number {
+    position: absolute;
+    top: 80vh;
+    left: 12vw;
+    transform: translate(-50%,-50%);
+}
+
+
+/* UvA logo */
+.UvA-logo {
+    width: 15vw;
+    margin-left: 2vh;
+}
+
+/* OTP logo */
+.OTP-logo {
+    width: 15vw;
+    margin: 2vh;
+}
+
+/* Product Characteristics slide */
+.symbol {
+    width: 1.5vw;
+    margin: 1px;
+}
+
+/* Slides that have content split in two */
+.ContentContainer, 
+.solo-container,
+.image-container, 
+.text-container, 
+.double-container {
+    display: flex;
+    padding: 1em;
+    justify-content: center;
+    flex-grow: 1;
+    flex-direction: column;
+    font-size: 22px;
+
+}
+
+.double-container {
+    flex-direction: row;
+}
+
+
+/* Next & previous buttons (arrows) */
+.prevDiv, .nextDiv {
+    display: flex;
+    height: 5em;
+    width: 3em;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
+
+.prev, .next {
+    color: black;
+    font-size: 3em;
+    cursor: pointer;
+    width: auto;
+    transition: 0.6s ease;
+    transition: visibility 0s;
+    user-select: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.prev-key,.next-key {
+    font-size: 1em;
+    text-align: center;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,.next:hover {
+    background-color: var(--color-dot);
+    color: var(--color-font);
+}
+
+/* The dots/bullets/indicators */
+.dot_row {
+    align-items: center;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50vw;
+    top: 95vh
+}
+
+.dot {
+    cursor: pointer;
+    height: 2.5vh;
+    width: 2.5vh;
+    margin: 0 2px;
+    background-color: var(--color-dot);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active.dot, .dot:hover {
+    background-color:  var(--color-dot-hover);
+}
+
+/* Check Form */
+.checkBox {
+    font-size: 0.8em;
+
+}
+
+/* Next & submit button */
+.button {
+        font-family: 'Work Sans', sans-serif;
+        font-size: 1.5em;
+        width: 150px;
+        align-items: center;
+        background-color: var(--background-btn);
+        color: var(--color-btn);
+        border: 0;
+        border-radius: 3px;
+        padding: 10px;
+        margin-top: 1em;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;  
+        align-self: center; 
+    }
+
+.hint {
+    visibility: hidden;
+    background-color: rgba(255, 0, 0, 0.7);
+    
+}

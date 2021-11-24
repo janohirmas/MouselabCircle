@@ -1,0 +1,30 @@
+/* SETUP */
+
+* {
+    box-sizing: border-box;
+}
+
+.debug-info{ 
+    display: none;
+}
+
+
+
+.screen-content{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(180, 180, 180);
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#next-btn {
+    display: none;
+}
+

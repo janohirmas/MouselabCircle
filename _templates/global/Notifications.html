@@ -1,0 +1,54 @@
+{{ extends "global/Page.html" }}
+
+{{ block scripts }}
+
+<script>
+    var bCond = true
+    document.addEventListener('keypress', (event)=>{
+        console.log(event.key);
+        switch (event.key) {
+            case "Enter":
+                if (bCond) { document.getElementById('next-btn').click()};
+        }
+    });
+</script>
+
+{{ endblock }}
+
+{{ block styles }}
+
+<style>
+
+
+    .notification-msg {
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+        transform: translate(-50%,-50%);
+        width: 40vw;
+        font-size: 18px;
+        color: black;
+        text-align: center;
+    }
+
+    .msg-list {
+        text-align: left;
+    }
+
+
+</style>
+{{ endblock }}
+
+{{ block content}}
+
+<div class="screen-content">
+    <div class="notification-msg">
+        {{ include Message }}
+    </div>
+</div>
+
+<button id='next-btn'> </button>
+
+
+{{ endblock }}
+

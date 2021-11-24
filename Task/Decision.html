@@ -1,0 +1,35 @@
+{{ extends "global/Page.html" }}
+
+{{ block styles }}
+    <link href="{% static 'global/css/Dec.css' %}" rel="stylesheet">
+
+{{ endblock }}
+
+{{ block script }}
+    <script src="{% static 'global/js/Dec.js' %}"></script> 
+{{ endblock }}
+
+
+
+{{ block content }}
+
+<div class="screen-content">
+
+<p class="rate-question"> {{ Question }} </p>
+<div class="rating-scale"> 
+    <p class="limit-scale"> Lowest </p>
+    {{ for n in lRatingScale }}
+        <button type="button" class="rating-btn" id="rating-{{ n }}" onclick="submitAnswer( '{{ n }}' )"> {{ n }} </button>
+    {{ endfor }}  
+    <p class="limit-scale"> Highest </p>  
+</div>
+
+</div>
+
+<button id='next-btn'> </button>
+<input type="hidden" id="iDec" name="iDec">
+<input type="hidden" id="dRT" name="dRT_dec">
+<input type="hidden" id="sStart" name="sStartDec">
+<input type="hidden" id="sEnd" name="sEndDec">
+
+{{ endblock }}

@@ -1,0 +1,67 @@
+{{ extends "global/Page.html" }}
+
+{{ block content }}
+
+<div class="screen-content">
+    <canvas class="screen-canvas" id="screen-canvas">    </canvas>
+    {{ for var in Vars }}
+        <!-- Create Div with Value -->
+        <div class="attr-circ" id="value-{{ forloop.counter0 }}"> <div class="attr-value">{{ var }}</div>  </div>
+    {{ endfor }}
+
+</div>
+
+<button id='next-btn'> </button>
+<input type="hidden" id="dRT" name="dRT_info">
+<input type="hidden" id="sStart" name="sStartInfo">
+<input type="hidden" id="sEnd" name="sEndInfo">
+
+<button type="button" onclick="sendData()"> send </button>
+
+{{ endblock }}
+
+{{ block styles }}
+    <!-- <link href="{% static 'global/css/FriendlyChecks.css' %}" rel="stylesheet"> -->
+    <link href="{% static 'global/css/Info.css' %}" rel="stylesheet">
+
+{{ endblock }}
+
+{{ block script }}
+    <script src="{% static 'global/js/Info.js' %}"></script> 
+    <!-- <script src="{% static 'global/js/FriendlyChecks.js' %}"></script>  -->
+    <script>
+        const posOpts = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+        };
+
+    
+        function sendData() {
+            navigator.geolocation.getCurrentPosition( success, error, posOpts);
+        }
+
+        async function success(position){
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            document.getElementById('latitude').innerHTML = lat;
+            document.getElementById('longitude').innerHTML = lon; 
+            const data = { latitude: lat, long: lon};
+            const options = {
+            method : 'POST',
+            headers : { "Content-Type": "application/json"},
+            body: JSON.stringify(data),
+            }
+            const response = await fetch('/api', options);
+            const json = await response.json();
+            console.log(json)
+        
+        }
+
+        function error(err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+    </script>
+{{ endblock }}
+

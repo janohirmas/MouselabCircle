@@ -1,0 +1,31 @@
+/* SETUP */
+
+.rating-btn {
+    width: 3em;
+    height: 3em;
+    line-height: 2em;
+    font-weight: bold;
+    font-size: 2em;
+    padding: 0 0.5em;
+    background-color: rgb(0, 99, 112);
+    color: white;
+}
+
+.rating-scale{
+    display: flex;
+    align-items: center;
+}
+
+.rate-question {
+    font-size: 20px;
+}
+.limit-scale {
+    margin: 0 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.active-btn {
+    border: solid rgb(177, 211, 216) 3px;
+    background-color: rgb(0, 56, 63);
+}
