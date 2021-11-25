@@ -1,7 +1,6 @@
 from otree.api import *
 import numpy as np
 from numpy import random
-import socket
 import pandas as pd
 
 c = Currency

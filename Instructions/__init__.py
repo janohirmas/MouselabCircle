@@ -1,6 +1,5 @@
 import numpy as np
 from otree.api import *
-import socket
 import time 
 c = Currency
 
