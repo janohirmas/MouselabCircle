@@ -17,9 +17,9 @@ class Constants(BaseConstants):
     figExample1         = 'global/figures/example1.jpg'
     figExample2         = 'global/figures/example2.jpg'
     iEvalTime           = 45
-    AvgDur              = '30'
+    AvgDur              = '15'
     iMaxScale           = '7'
-    iBonus              = 3
+    iBonus              = 1
     iPracticeRounds     = 3
     NumTrials           = 30
     # Friendly Checks
@@ -64,12 +64,7 @@ class Constants(BaseConstants):
         dict(
             Title = 'Review',
             path='Instructions/slide6.html',
-            ),    
-        dict(
-            Title = 'Review',
-            path='Instructions/slide7.html',
-            ),        
-    
+            ),   
     ]
     ## EYE-TRACKER CONSTANTS
     # Host machine IP

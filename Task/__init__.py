@@ -116,7 +116,7 @@ def creating_session(subsession):
             # iR4 = Constants.num_rounds
             # Randomize paid rounds
             iRound1 = random.choice(range(iR1,iR2))
-            while iRound1==iHalf:
+            while iRound1==iHalf+Constants.num_prounds:
                 iRound1 = random.choice(range(iR1,iR2))
             part.iRound1     = iRound1
 
@@ -260,7 +260,7 @@ class Decision(Page):
                 'How well do you think <b> others </b> will rate this candidate?'
         ]
         bOrder = player.participant.BlockOrder == 0
-        bFirst = player.round_number <= Constants.num_brounds + Constants.num_prounds
+        bFirst = player.round_number <= Constants.num_brounds + Constants.num_prounds +1
         if  (bOrder and bFirst) or ( (not bOrder) and  (not bFirst) ):
             idx = 0
         else:
@@ -283,7 +283,11 @@ class Decision(Page):
         if player.round_number==int(p.iRound1):
             p.iAnsValue1 = player.iDec
             iMat = Constants.Results.to_numpy()
-            p.iRightValue1 = iMat[player.iCandSet,p.BlockOrder]
+            if player.iGender!=99:
+                p.iRightValue1 = iMat[player.iCandSet,p.BlockOrder]
+            else:
+                p.iRightValue1 = player.iDec
+                
             print('Type:{}, Decision: {}, Correct Answer: {}'.format(player.iCandSet,int(p.iAnsValue1),int(p.iRightValue1)))
         # if player.round_number==int(p.iRound2):
         #     p.iAnsValue2 = player.iDec

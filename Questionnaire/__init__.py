@@ -11,7 +11,7 @@ class Constants(BaseConstants):
     name_in_url = 'Questionnaire'
     players_per_group = None
     num_rounds = 1
-    iBonusRight = 3
+    iBonusRight = 1
 
 
 class Subsession(BaseSubsession):
