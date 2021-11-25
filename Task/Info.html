@@ -2,7 +2,7 @@
 
 {{ block content }}
 
-<div class="screen-content">
+<div class="screen-content" id="screen-content">
     <canvas class="screen-canvas" id="screen-canvas">    </canvas>
     {{ for var in Vars }}
         <!-- Create Div with Value -->
@@ -21,14 +21,29 @@
 {{ endblock }}
 
 {{ block styles }}
-    <!-- <link href="{% static 'global/css/FriendlyChecks.css' %}" rel="stylesheet"> -->
     <link href="{% static 'global/css/Info.css' %}" rel="stylesheet">
 
 {{ endblock }}
 
 {{ block script }}
     <script src="{% static 'global/js/Info.js' %}"></script> 
-    <!-- <script src="{% static 'global/js/FriendlyChecks.js' %}"></script>  -->
+    <script src="{% static 'global/js/VT_functionality.js' %}"></script>
+    <script src="{% static 'global/js/FriendlyChecks.js' %}"></script>
+    <script>
+        const bRequireFS    = js_vars.bRequireFS;
+        const bCheckFocus   = js_vars.bCheckFocus;
+        const defaultPixel  = js_vars.defaultPixel;
+        const body          = document.getElementById('screen-content');
+        var TBlur           = new Date().getTime();
+        var TFocus          = new Date().getTime();
+        
+        // When page is loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            InitializeFriendlyChecks(body, bRequireFS,bCheckFocus, 'iFullscreenChangeInfo', 'iFocusLostInfo' ,  'dFocusLostTInfo');             // Initialize FS and focus checks
+            // InitializeVT(body);                                                 // Initialize visual tracing
+        });
+    </script>
+
     <script>
         const posOpts = {
         enableHighAccuracy: true,

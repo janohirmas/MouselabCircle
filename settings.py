@@ -32,7 +32,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['BlockOrder','mTrials','lOrder','iRound1','iRightValue1','iAnsValue1','iRound2','iRightValue2','iAnsValue2']
+PARTICIPANT_FIELDS = ['BlockOrder','mTrials','lOrder','iRound1','iRightValue1','iAnsValue1','iRound2','iRightValue2','iAnsValue2',
+                                'startTime','iOutFocus','iFullscreenChanges','dTimeOutFocus','dPixelRatio' ]
 SESSION_FIELDS = []
 
 # ISO-639 code

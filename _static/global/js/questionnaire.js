@@ -91,65 +91,66 @@ const firstQuestions = [
         name: "D6",
         type: "longOpen",
     },
-    {
-        question: "Do you usually wear glasses/contact lenses?",
-        name: "ET1",
-        type: "radio",
-        values: [1,2,3,4],
-        labels: ['Both','Glasses','Contact Lenses','No']
-    },
-    {
-        question: "Are you currently wearing glasses/contact lenses?",
-        name: "ET2",
-        type: "radio",
-        values: [1,2,3],
-        labels: ['Glasses','Contact Lenses','No']
-    },
-    {
-        question: "If you do wear glasses/contact lenses, what is your prescription?",
-        name: "ET3",
-        type: "shortOpen",
-    },
+
+    // {
+    //     question: "Do you usually wear glasses/contact lenses?",
+    //     name: "ET1",
+    //     type: "radio",
+    //     values: [1,2,3,4],
+    //     labels: ['Both','Glasses','Contact Lenses','No']
+    // },
+    // {
+    //     question: "Are you currently wearing glasses/contact lenses?",
+    //     name: "ET2",
+    //     type: "radio",
+    //     values: [1,2,3],
+    //     labels: ['Glasses','Contact Lenses','No']
+    // },
+    // {
+    //     question: "If you do wear glasses/contact lenses, what is your prescription?",
+    //     name: "ET3",
+    //     type: "shortOpen",
+    // },
 
 ];
 // Add questionnaire questions in different orders
-const shuffleQuestions = [ 
-    {
-        question: "How much do you think others valued 'GMA' compared to you?",
-        name: "EQ1",
-        type: "scale",
-        values: likertValues,
-        limits: ['I valued it much more','They valued it much more']
-    },    
-    {
-        question: "How much do you think others valued 'Personality (Conscientiousness)' compared to you?",
-        name: "EQ2",
-        type: "scale",
-        values: likertValues,
-        limits: ['I valued it much more','They valued it much more']
-    },
-    {
-        question: "How much do you think others valued 'Interview' compared to you?",
-        name: "EQ3",
-        type: "scale",
-        values: likertValues,
-        limits: ['I valued it much more','They valued it much more']
-    },
-    {
-        question: "How much do you think others valued 'Gender' compared to you?",
-        name: "EQ4",
-        type: "scale",
-        values: likertValues,
-        limits: ['I valued it much more','They valued it much more']
-    },
-    {
-        question: "How much do you think others valued 'Odd/Even' compared to you?",
-        name: "EQ5",
-        type: "scale",
-        values: likertValues,
-        limits: ['I valued it much more','They valued it much more']
-    },
-];
+const shuffleQuestions = [ ];
+//     {
+//         question: "How much do you think others valued 'GMA' compared to you?",
+//         name: "EQ1",
+//         type: "scale",
+//         values: likertValues,
+//         limits: ['I valued it much more','They valued it much more']
+//     },    
+//     {
+//         question: "How much do you think others valued 'Personality (Conscientiousness)' compared to you?",
+//         name: "EQ2",
+//         type: "scale",
+//         values: likertValues,
+//         limits: ['I valued it much more','They valued it much more']
+//     },
+//     {
+//         question: "How much do you think others valued 'Interview' compared to you?",
+//         name: "EQ3",
+//         type: "scale",
+//         values: likertValues,
+//         limits: ['I valued it much more','They valued it much more']
+//     },
+//     {
+//         question: "How much do you think others valued 'Gender' compared to you?",
+//         name: "EQ4",
+//         type: "scale",
+//         values: likertValues,
+//         limits: ['I valued it much more','They valued it much more']
+//     },
+//     {
+//         question: "How much do you think others valued 'Odd/Even' compared to you?",
+//         name: "EQ5",
+//         type: "scale",
+//         values: likertValues,
+//         limits: ['I valued it much more','They valued it much more']
+//     },
+// ];
   
 
 // *********************************************************************

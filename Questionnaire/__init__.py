@@ -50,31 +50,31 @@ class Player(BasePlayer):
 # PAGES
 class Questionnaire(Page):
     form_model = 'player'
-    form_fields = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 
-                    'ET1','ET2','ET3',
-                    'EQ1','EQ2','EQ3','EQ4','EQ5']
+    form_fields = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', ] 
+                    # 'EQ1','EQ2','EQ3','EQ4','EQ5'] ## just in case of 2 blocks
 
 class ResultPage(Page):
     @staticmethod
     def vars_for_template(player: Player):
         p = player.participant
         # dPayoff = min(5 - 0.5*(p.iRightValue1 - p.iAnsValue1)^2,0) + min(5 - 0.5*(p.iRightValue2 - p.iAnsValue2)^2,0)
-        dPayoff =( (p.iRightValue1 == p.iAnsValue1) + (p.iRightValue2 == p.iAnsValue2))*Constants.iBonusRight
+        # dPayoff =( (p.iRightValue1 == p.iAnsValue1) + (p.iRightValue2 == p.iAnsValue2))*Constants.iBonusRight # If two blocks
+        dPayoff =(p.iRightValue1 == p.iAnsValue1)*Constants.iBonusRight # If 1 blocks
         player.round1      = int(p.iRound1)
-        player.round2      = int(p.iRound2)
+        # player.round2      = int(p.iRound2) # just if 2 blocks
         player.RightValue1 = int(p.iRightValue1)
         player.AnsValue1   = int(p.iAnsValue1)    
-        player.RightValue2 = int(p.iRightValue2)
-        player.AnsValue2   = int(p.iAnsValue2)
+        # player.RightValue2 = int(p.iRightValue2) 
+        # player.AnsValue2   = int(p.iAnsValue2)
         player.payoff      = dPayoff
 
         return dict(
             round1      = p.iRound1,
-            round2      = p.iRound2,
+            # round2      = p.iRound2, 
             RightValue1 = p.iRightValue1,
             AnsValue1   = p.iAnsValue1,            
-            RightValue2 = p.iRightValue2,
-            AnsValue2   = p.iAnsValue2,
+            # RightValue2 = p.iRightValue2,
+            # AnsValue2   = p.iAnsValue2,
             payoff      = dPayoff,
         )  
 

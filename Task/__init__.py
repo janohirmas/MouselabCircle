@@ -15,8 +15,9 @@ class Constants(BaseConstants):
     name_in_url = 'Task'
     players_per_group = None
     num_brounds = 32
-    num_prounds = 4
-    num_rounds = 2*num_brounds+num_prounds  
+    num_prounds = 3
+    # num_rounds = 2*num_brounds+num_prounds+2  # If 2 blocks
+    num_rounds = num_brounds+num_prounds+1   # if 1 block
     iRatingScale = 7    
     lRoundsVisual = [1,num_brounds+num_prounds,num_brounds+num_prounds+1,2*num_brounds+num_prounds]
     lRoundsBefore = [2]
@@ -27,6 +28,10 @@ class Constants(BaseConstants):
     ADDRESS = (HOST, PORT)
     # Matrix with results
     Results = pd.read_csv("_static/global/results.csv")
+    # Friendly Checks
+    bRequireFS          = True
+    bCheckFocus         = True
+
 
 
 class Subsession(BaseSubsession):
@@ -56,14 +61,15 @@ class Player(BasePlayer):
     sEndInfo        = models.StringField()
     sStartDec       = models.StringField()
     sEndDec         = models.StringField()
-    # 2nd Calibration
-    dError          = models.FloatField()
-    ValidPts        = models.IntegerField()
-    Result          = models.StringField()
-    NumCal          = models.IntegerField()
     # Result Variables
     iCandSet        = models.IntegerField()
-
+    # FriendlyCheck Vars
+    iFocusLostInfo          = models.FloatField()
+    iFullscreenChangeInfo   = models.FloatField()
+    dFocusLostTInfo         = models.FloatField()
+    iFocusLostDec           = models.FloatField()
+    iFullscreenChangeDec    = models.FloatField()
+    dFocusLostTDec          = models.FloatField()
 
 
 
@@ -91,27 +97,39 @@ def creating_session(subsession):
                                 lTrials.append([iCount,g,f,m,p,i])
             # Random Order Block1
             random.shuffle(lTrials)
-            mTrials = lTrials
+            mTrials = []
             # Random Order Block2
+            iHalf = int(np.ceil(Constants.num_brounds/2))
+            mTrials.extend(lTrials[0:iHalf])
+            mTrials.append([99,99,99,99,99,99])
+            mTrials.extend(lTrials[iHalf:])
             random.shuffle(lTrials)
-            mTrials.extend(lTrials)
+            mTrials.extend(lTrials[0:iHalf])
+            mTrials.append([99,99,99,99,99,99])
+            mTrials.extend(lTrials[iHalf:])
             # Save trials as participant variable.
             part.mTrials = mTrials
             # Relevant round numbers for choosing paid rounds
             iR1 = Constants.num_prounds+1
-            iR2 = Constants.num_prounds+Constants.num_brounds
-            iR3 = Constants.num_prounds+Constants.num_brounds+1
-            iR4 = Constants.num_rounds
+            iR2 = Constants.num_prounds+Constants.num_brounds+1
+            # iR3 = Constants.num_prounds+Constants.num_brounds+1 # for 2 blocks
+            # iR4 = Constants.num_rounds
             # Randomize paid rounds
-            part.iRound1     = random.choice(range(iR1,iR2))
-            part.iRound2     = random.choice(range(iR3,iR4))
-            print('Trials selected for participant {}: {} and {}'.format(part.code,part.iRound1,part.iRound2))
+            iRound1 = random.choice(range(iR1,iR2))
+            while iRound1==iHalf:
+                iRound1 = random.choice(range(iR1,iR2))
+            part.iRound1     = iRound1
+
+            # part.iRound2     = random.choice(range(iR3,iR4)) # for 2 blocks
+            # print('Trials selected for participant {}: {} and {}'.format(part.code,part.iRound1,part.iRound2)) ## for 2 blocks
+            print('Trial selected for participant {}: {} '.format(part.code,part.iRound1))
     for player in subsession.get_players():
         ## Load participant's round
         p = player.participant
         if player.round_number<= Constants.num_prounds:
-            vPars = p.mTrials[random.randint(Constants.num_brounds)]     # Choose random round for the practice 
+            vPars = p.mTrials[random.randint(10)]     # Choose random round for the practice 
         else:
+            player.round_number-Constants.num_prounds-1
             vPars = p.mTrials[player.round_number-Constants.num_prounds-1] # Choose respective round values
         # Save variables in players database
 
@@ -119,57 +137,8 @@ def creating_session(subsession):
         player.sOrder = "{},{},{},{},{}".format(pos1,pos2,pos3,pos4,pos5)
         player.iCandSet, player.iGender, player.iFirst, player.iGMA, player.iPersonality, player.iInterview = vPars
         
-def calibrate():
-    # Open Connection with Eye-Tracker
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(Constants.ADDRESS)
-    # Start Calibration and Show results
-    s.send(str.encode('<SET ID="CALIBRATE_START" STATE="1" />\r\n'))
-    s.send(str.encode('<SET ID="CALIBRATE_SHOW" STATE="1" />\r\n'))
-
-    iCal = 1 # Number of calibration attempts
-    while True:
-            rxdat = s.recv(1024)    
-            # print(bytes.decode(rxdat))
-            result  = bytes.decode(rxdat)
-            if result.find('CALIB_RESULT_PT')!=-1:
-                iPts    = int(result.split('PT="')[1].split('"')[0])
-            if (result.find('ID="CALIB_RESULT"')!=-1):
-                s.send(str.encode('<GET ID="CALIBRATE_RESULT_SUMMARY" />\r\n'))
-                rxdat = s.recv(1024)    
-                sum = bytes.decode(rxdat)
-                dError      = float(sum.split('AVE_ERROR="')[1].split('"')[0])
-                dValidPts   = float(sum.split('VALID_POINTS="')[1].split('"')[0])
-                print('Valid Points: {}, Avg. Error: {}'.format(dValidPts,dError))
-                if dValidPts==iPts and dError<=60: 
-                    s.send(str.encode('<SET ID="CALIBRATE_SHOW" STATE="0" />\r\n'))
-                    break
-                else:
-                    s.send(str.encode('<SET ID="CALIBRATE_START" STATE="1" />\r\n'))
-                    iCal +=1
-
-    s.close()
-    return dict(
-        dError = dError,
-        ValidPts = dValidPts,
-        Result  = result,
-        NumCal = iCal,
-    )
 
 # PAGES
-class Calibration(Page):
-    @staticmethod
-    def vars_for_template(player):
-        print(calibrate)
-        Calibration = calibrate()
-        player.dError = float(Calibration['dError'])
-        player.ValidPts = int(Calibration['ValidPts'])
-        player.Result = str(Calibration['Result'])
-        player.NumCal = int(Calibration['NumCal'])
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number==Constants.num_brounds+Constants.num_prounds+1 or player.round_number==1
 
 class ChangeTask(Page):
     @staticmethod
@@ -179,65 +148,41 @@ class ChangeTask(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == Constants.num_brounds+Constants.num_prounds+1
+        # return player.round_number == Constants.num_brounds+Constants.num_prounds+1 # in case of 2 blocks
+        return False
 
 
-class MsgBeforeTrial(Page):
+class Notify(Page):
     @staticmethod
     def vars_for_template(player: Player):
-        msg = 'Notifications/msgStartPractice.html'
+        if player.round_number == Constants.num_prounds+1:
+            msg = 'Notifications/msgEndPractice.html'
+        else:
+            msg = 'Notifications/msgStartPractice.html'
 
         return dict(Message = msg, selfEval = player.participant.BlockOrder==0)
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number in Constants.lRoundsBefore
-
-class MsgAfterTrial(Page):
-    @staticmethod
-    def vars_for_template(player: Player):
-        if player.round_number == Constants.num_prounds+Constants.num_brounds:
-            msg = 'Notifications/msgMiddle.html'
-        else:
-            msg = 'Notifications/msgEndPractice.html'
-
-        return dict(Message = msg)
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number in Constants.lRoundsAfter
-
-
-class MsgVisual(Page):
-    @staticmethod
-    def vars_for_template(player: Player):
-        return dict(Message = 'Notifications/msgVisual.html')
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number in Constants.lRoundsVisual
-
-
-class VisualTest(Page):
-    form_model = 'player'
-    form_fields = [ 'sStartVisual','sEndVisual' ]
-
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number in Constants.lRoundsVisual
-
+        return player.round_number in [1,Constants.num_prounds+1]
 
 class FixCross(Page):
     form_model = 'player'
     form_fields = [ 'sStartCross','sEndCross' ]
 
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number!=1
-
 class Info(Page):
     form_model = 'player'
-    form_fields = [ 'dRT_info', 'sStartInfo','sEndInfo' ]
+    form_fields = [ 'dRT_info', 'sStartInfo','sEndInfo', 'iFocusLostInfo', 'iFullscreenChangeInfo', 'dFocusLostTInfo' ]
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        participant = player.participant
+        # Add Focus variables to total if it's not practice trial
+        if (player.round_number > Constants.num_prounds):
+            participant.iOutFocus = int(participant.iOutFocus) + player.iFocusLostInfo
+            participant.iFullscreenChanges = int(participant.iFullscreenChanges) + player.iFullscreenChangeInfo
+            participant.dTimeOutFocus = float(participant.dTimeOutFocus) + player.dFocusLostTInfo
+
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -246,26 +191,36 @@ class Info(Page):
         # Gender
         if (player.iGender==1):
             lOutcomes.append('Female')
+        elif (player.iGender==99): 
+            lOutcomes.append('Press 2')
         else:
             lOutcomes.append('Male')
         # First
         if (player.iFirst==1):
             lOutcomes.append('Odd')
+        elif (player.iFirst==99): 
+            lOutcomes.append('Press 2')
         else:
             lOutcomes.append('Even')
         # GMA
         if (player.iGMA==1):
             lOutcomes.append('High GMA')
+        elif (player.iGMA==99): 
+            lOutcomes.append('Press 2')
         else:
             lOutcomes.append('Low GMA')
         # Personality
         if (player.iPersonality==1):
             lOutcomes.append('High Consc.')
+        elif (player.iPersonality==99): 
+            lOutcomes.append('Press 2')
         else:
             lOutcomes.append('Low Consc.')
         # Interview
         if (player.iInterview==1):
             lOutcomes.append('Good Interview')
+        elif (player.iInterview==99): 
+            lOutcomes.append('Press 2')
         else:
             lOutcomes.append('Bad Interview')
         
@@ -276,19 +231,28 @@ class Info(Page):
           Vars = lOutcomes
         )
 
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number!=1
+    def js_vars(player: Player):
+        return   dict(      
+            bRequireFS    = Constants.bRequireFS,
+            bCheckFocus   = Constants.bCheckFocus,
+            defaultPixel  = float(player.participant.dPixelRatio),
+        )
+
 
 class Decision(Page):
 
     form_model = 'player'
-    form_fields = [ 'dRT_dec', 'iDec', 'sStartDec','sEndDec' ]
+    form_fields = [ 'dRT_dec', 'iDec', 'sStartDec','sEndDec', 'iFocusLostDec', 'iFullscreenChangeDec', 'dFocusLostTDec']
+
     @staticmethod
     def js_vars(player: Player):
         return dict(
             iMax = Constants.iRatingScale,
+            bRequireFS    = Constants.bRequireFS,
+            bCheckFocus   = Constants.bCheckFocus,
+            defaultPixel  = player.participant.dPixelRatio,
         )
+
     @staticmethod
     def vars_for_template(player: Player):
         lQuestions = [
@@ -308,27 +272,24 @@ class Decision(Page):
         )
 
     @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number!=1
-
-    @staticmethod
     def before_next_page(player: Player, timeout_happened):
         p = player.participant
+        # Add Focus variables to total if it's not practice trial 
+        if (player.round_number > Constants.num_prounds):
+            p.iOutFocus = int(p.iOutFocus) + player.iFocusLostDec
+            p.iFullscreenChanges = int(p.iFullscreenChanges) + player.iFullscreenChangeDec
+            p.dTimeOutFocus = float(p.dTimeOutFocus) + player.dFocusLostTDec
+        # Save results if the round is selected for payments
         if player.round_number==int(p.iRound1):
             p.iAnsValue1 = player.iDec
             iMat = Constants.Results.to_numpy()
             p.iRightValue1 = iMat[player.iCandSet,p.BlockOrder]
             print('Type:{}, Decision: {}, Correct Answer: {}'.format(player.iCandSet,int(p.iAnsValue1),int(p.iRightValue1)))
-        if player.round_number==int(p.iRound2):
-            p.iAnsValue2 = player.iDec
-            iMat = Constants.Results.to_numpy()
-            col = 1-p.BlockOrder
-            p.iRightValue2 = iMat[player.iCandSet,col]
-            print('Type:{}, Decision: {}, Correct Answer: {}'.format(player.iCandSet,int(p.iAnsValue2),int(p.iRightValue2)))
+        # if player.round_number==int(p.iRound2):
+        #     p.iAnsValue2 = player.iDec
+        #     iMat = Constants.Results.to_numpy()
+        #     col = 1-p.BlockOrder
+        #     p.iRightValue2 = iMat[player.iCandSet,col]
+        #     print('Type:{}, Decision: {}, Correct Answer: {}'.format(player.iCandSet,int(p.iAnsValue2),int(p.iRightValue2)))
 
-        
-
-
-
-page_sequence = [ Calibration, ChangeTask, MsgBeforeTrial, FixCross, Info, Decision, MsgVisual, VisualTest, MsgAfterTrial]
-# page_sequence = [  MsgBeforeTrial, FixCross, Info, Decision, MsgVisual, VisualTest, MsgAfterTrial]
+page_sequence = [ChangeTask, Notify, FixCross, Info, Decision]

@@ -9,7 +9,7 @@ var bCalibrated = false;
 // 
 // ----------------------------------------------------- //
 
-function InitializeFriendlyChecks(GameBody,bRequireFS=true, bCheckFocus=true) {
+function InitializeFriendlyChecks(GameBody,bRequireFS=true, bCheckFocus=true, sNameFS = 'iFullscreenChange', sNameFL='iFocusLost' , sNameFT= 'dFocusLostT' ) {
   if (typeof GameBody==='undefined') {
     GameBody= document.getElementsByTagName('body')[0];
   }
@@ -19,7 +19,7 @@ function InitializeFriendlyChecks(GameBody,bRequireFS=true, bCheckFocus=true) {
     console.log('Checking for Fullscreen')
     iFullscreenChange       = document.createElement("input");
     iFullscreenChange.type      = 'hidden';
-    iFullscreenChange.name      = 'iFullscreenChange';
+    iFullscreenChange.name      =  sNameFS;
     iFullscreenChange.id        = 'iFullscreenChange';
     iFullscreenChange.value     = 0;
     GameBody.appendChild(iFullscreenChange);
@@ -33,13 +33,13 @@ function InitializeFriendlyChecks(GameBody,bRequireFS=true, bCheckFocus=true) {
     // Create input iFocusLost
     iFocusLost        = document.createElement("input");
     iFocusLost.type       = 'hidden';
-    iFocusLost.name       = 'iFocusLost';
+    iFocusLost.name       = sNameFL;
     iFocusLost.id         = 'iFocusLost';
     iFocusLost.value      = 0;
     // Create input dFocusLostT
     dFocusLostT        = document.createElement("input");
     dFocusLostT.type       = 'hidden';
-    dFocusLostT.name       = 'dFocusLostT';
+    dFocusLostT.name       = sNameFT;
     dFocusLostT.id         = 'dFocusLostT';
     dFocusLostT.value      = 0;
     // Create input Create Timer variables

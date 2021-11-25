@@ -2,6 +2,8 @@
 
 {{ block app_styles }}
 <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'global/css/FriendlyChecks.css' %}">
+<link rel="stylesheet" href="{% static 'global/css/VT_functionality.css' %}">
 
 <style>
   .img-example {
@@ -12,10 +14,10 @@
 {{ endblock }}
 
 {% block app_scripts %}
-
+<script src="{% static 'global/js/VT_functionality.js' %}"></script>
 <script src="{% static 'global/js/FriendlyChecks.js' %}"></script>
 <script>
-  const lSolutions    =  ['2', 'a', 'b','c'];     // Solutions for Check-up questions in the last slide
+  const lSolutions    =  ['1', 'a', 'c'];     // Solutions for Check-up questions in the last slide
   const bRequireFS    = js_vars.bRequireFS;
   const bCheckFocus   = js_vars.bCheckFocus;
   const defaultPixel  = js_vars.dPixelRatio;

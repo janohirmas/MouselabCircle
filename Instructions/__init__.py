@@ -1,7 +1,7 @@
 import numpy as np
 from otree.api import *
 import socket
-
+import time 
 c = Currency
 
 doc = """
@@ -22,6 +22,10 @@ class Constants(BaseConstants):
     iBonus              = 3
     iPracticeRounds     = 3
     NumTrials           = 30
+    # Friendly Checks
+    bRequireFS          = True
+    bCheckFocus         = True
+
     SlidesIntro         = [
         dict(
             Title = 'General Information',
@@ -84,12 +88,16 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    # Controls    = models.StringField()
-    dError       = models.FloatField()
-    ValidPts    = models.IntegerField()
-    Result      = models.StringField()
-    NumCal      = models.IntegerField()
-    iBlockOrder = models.IntegerField()
+    dError              = models.FloatField()
+    ValidPts            = models.IntegerField()
+    Result              = models.StringField()
+    NumCal              = models.IntegerField()
+    iBlockOrder         = models.IntegerField()
+    # Friendly Check vars and PixelRatio
+    dPixelRatio         = models.FloatField()
+    sSlideSequence      = models.StringField(blank=True)
+    sSlideTime          = models.StringField(blank=True)
+
 
 # FUNCTIONS
 
@@ -98,15 +106,29 @@ def creating_session(subsession):
         for player in subsession.get_players():
             part            = player.participant
             block = np.random.choice([0,1])
-            part.BlockOrder = block
+            # part.BlockOrder = block # if two blocks
+            part.BlockOrder = 0
             player.iBlockOrder = int(block)
    
-    
+
+
 # PAGES
      
                 
     
         
+class Calibration(Page):
+    form_model = 'player'
+    form_fields = [ 'dPixelRatio' ]
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(Message = 'Notifications/msgCal.html')
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        part = player.participant
+        part.dPixelRatio = player.dPixelRatio
 
 
 class Introduction(Page):
@@ -116,6 +138,16 @@ class Introduction(Page):
             UvA_logo = Constants.figUvA_logo,
             Slides = Constants.SlidesIntro,
         )
+    
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        part = player.participant
+        # Initialize Focus variables#        
+        part.startTime          = time.time()
+        part.iOutFocus          = 0
+        part.iFullscreenChanges = 0
+        part.dTimeOutFocus      = 0
+
 
 class Instructions(Page):
     @staticmethod
@@ -127,14 +159,12 @@ class Instructions(Page):
             Slides          = Constants.SlidesInstructions,
             SelfEval        = selfEval ,
         )
-
-class MessageBeforeCal(Page):
-    
-    @staticmethod
-    def vars_for_template(player):
-        return dict(
-            Message         = 'Notifications/msgBeforeCal.html',
+    @staticmethod 
+    def js_vars(player: Player):
+        return   dict(      
+            bRequireFS    = Constants.bRequireFS,
+            bCheckFocus   = Constants.bCheckFocus,
+            defaultPixel  = player.participant.dPixelRatio,
         )
 
-
-page_sequence = [Introduction, Instructions, MessageBeforeCal]
+page_sequence = [Introduction, Calibration, Instructions]
