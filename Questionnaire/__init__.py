@@ -72,7 +72,7 @@ class ResultPage(Page):
         player.AnsValue1   = int(p.iAnsValue1)    
         # player.RightValue2 = int(p.iRightValue2) 
         # player.AnsValue2   = int(p.iAnsValue2)
-        player.dPayoff              = dPayoff
+        player.dPayoff              = float(dPayoff)
         player.iOutFocus            = int(p.iOutFocus)
         player.iFullscreenChanges   = int(p.iFullscreenChanges)
         player.dTimeOutFocus        = float(p.dTimeOutFocus)
