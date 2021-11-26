@@ -255,8 +255,8 @@ class Decision(Page):
     @staticmethod
     def vars_for_template(player: Player):
         lQuestions = [
-                'How well do you think the candidate will do?',
-                'How well do you think <b> others </b> will rate this candidate?'
+                'How well do you think the applicant will do?',
+                'How well do you think <b> others </b> will rate this applicant?'
         ]
         bOrder = player.participant.BlockOrder == 0
         bFirst = player.round_number <= Constants.num_brounds + Constants.num_prounds +1
