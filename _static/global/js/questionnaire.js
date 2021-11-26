@@ -87,7 +87,7 @@ const firstQuestions = [
         type: "longOpen",
     },
     {
-        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding which of the two products to purchase? If so, describe it shortly.",
+        question: "During the experiment, did you use any specific strategy or rule of thumb when deciding. Briefly describe.",
         name: "D6",
         type: "longOpen",
     },

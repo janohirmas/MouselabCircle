@@ -1,19 +1,19 @@
 <div class="double-container">
     <div class="text-container">
-    <p> <b>Performance measure </b>: </p>
+    <p> <b>Performance measure</b>: </p>
         <ul>
             <li> For each candidate, the firm provided information about how well the respective worker did after three months. </li>
             <li>  We sorted all the workers and split them into {{ Constants.iMaxScale }} different categories. </li>
             <li> These categories go from 1 to {{ Constants.iMaxScale }}, where 1 is the lowest score and {{ Constants.iMaxScale }} is the highest score. </li>
             <li> There are roughly the same amount of workers in each category. </li>
     {{ if SelfEval }}
-            <li>  <b>Your task </b>: Rank the participant based on the information you observed before. </li>
+            <li>  <b>Your task</b>: Rank the participant based on the information you observed before. </li>
     {{ else }}
             <li> Participants in a previous online study (with people from different countries)
         guessed the rank of the candidates based on the same information you are going to observe.</li>
             <li> <b>Your task </b>: Guess the rank that most of these previous participants chose for the candidate. </li>
     {{ endif }}
-            <li> To make your decision, click on the desired rating. </li>
+            <li> To make your decision, click on the category you want to select. </li>
         </ul>
 
     </div>

@@ -8,7 +8,9 @@
     display: none;
 }
 
-
+body {
+    overflow: hidden;
+}
 
 .screen-content{
     width: 100vw;

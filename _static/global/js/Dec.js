@@ -17,8 +17,8 @@ document.addEventListener('keypress', (event)=>{
             iValue = Math.min(iMax,iValue+1);
             activateButton(iValue);
             break;
-        case "Enter":
-            submitAnswer(iValue);
+        // case "Enter":
+        //     submitAnswer(iValue);
     }
 
 });
