@@ -36,6 +36,14 @@ PARTICIPANT_FIELDS = ['BlockOrder','mTrials','lOrder','iRound1','iRightValue1','
                                 'startTime','iOutFocus','iFullscreenChanges','dTimeOutFocus','dPixelRatio' ]
 SESSION_FIELDS = []
 
+ROOMS = [
+    dict(
+        name='econ101',
+        display_name='Econ 101 class',
+        participant_label_file='_rooms/econ101.txt',
+    ),
+    dict(name='prolific', display_name='Prolific Room (no participant labels)'),
+]
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'en'
