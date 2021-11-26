@@ -45,7 +45,13 @@ class Player(BasePlayer):
     AnsValue1   = models.IntegerField()         
     RightValue2 = models.IntegerField()
     AnsValue2   = models.IntegerField()
-
+    # Final Checks for Prolific
+    dPayoff     = models.FloatField()
+    iOutFocus   = models.IntegerField()
+    iFullscreenChanges = models.IntegerField()
+    dTimeOutFocus = models.FloatField()
+    bCheckQ = models.BooleanField()
+    sProlificID = models.StringField()
 
 # PAGES
 class Questionnaire(Page):
@@ -66,7 +72,12 @@ class ResultPage(Page):
         player.AnsValue1   = int(p.iAnsValue1)    
         # player.RightValue2 = int(p.iRightValue2) 
         # player.AnsValue2   = int(p.iAnsValue2)
-        player.payoff      = dPayoff
+        player.dPayoff              = dPayoff
+        player.iOutFocus            = int(p.iOutFocus)
+        player.iFullscreenChanges   = int(p.iFullscreenChanges)
+        player.dTimeOutFocus        = float(p.dTimeOutFocus)
+        player.bCheckQ              = bool(p.bCheckQ)
+        player.sProlificID          = str(p.label)
 
         return dict(
             round1      = p.iRound1,

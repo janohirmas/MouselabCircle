@@ -91,6 +91,8 @@ class Player(BasePlayer):
     dPixelRatio         = models.FloatField()
     sSlideSequence      = models.StringField(blank=True)
     sSlideTime          = models.StringField(blank=True)
+    # Prolific ID
+    sProlific_ID        = models.StringField()
 
 
 # FUNCTIONS
@@ -126,6 +128,9 @@ class Calibration(Page):
 
 
 class Introduction(Page):
+    
+    
+
     @staticmethod
     def vars_for_template(player):
         return dict(
@@ -141,6 +146,7 @@ class Introduction(Page):
         part.iOutFocus          = 0
         part.iFullscreenChanges = 0
         part.dTimeOutFocus      = 0
+        player.sProlific_ID = part.label
 
 
 class Instructions(Page):

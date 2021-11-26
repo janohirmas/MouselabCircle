@@ -33,7 +33,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 PARTICIPANT_FIELDS = ['BlockOrder','mTrials','lOrder','iRound1','iRightValue1','iAnsValue1','iRound2','iRightValue2','iAnsValue2',
-                                'startTime','iOutFocus','iFullscreenChanges','dTimeOutFocus','dPixelRatio' ]
+                                'startTime','iOutFocus','iFullscreenChanges','dTimeOutFocus','dPixelRatio','bCheckQ' ]
 SESSION_FIELDS = []
 
 ROOMS = [

@@ -288,6 +288,9 @@ class Decision(Page):
                 p.iRightValue1 = player.iDec
                 
             print('Type:{}, Decision: {}, Correct Answer: {}'.format(player.iCandSet,int(p.iAnsValue1),int(p.iRightValue1)))
+        if player.iGender == 99:
+            p.bCheckQ = player.iDec==2
+        
         # if player.round_number==int(p.iRound2):
         #     p.iAnsValue2 = player.iDec
         #     iMat = Constants.Results.to_numpy()
