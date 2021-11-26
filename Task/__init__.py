@@ -256,11 +256,14 @@ class Decision(Page):
     def vars_for_template(player: Player):
         lQuestions = [
                 'How well do you think the applicant will do?',
-                'How well do you think <b> others </b> will rate this applicant?'
+                'How well do you think <b> others </b> will rate this applicant?',
+                'This is an attention check. Please select 2.'
         ]
         bOrder = player.participant.BlockOrder == 0
         bFirst = player.round_number <= Constants.num_brounds + Constants.num_prounds +1
-        if  (bOrder and bFirst) or ( (not bOrder) and  (not bFirst) ):
+        if player.iGender==99:
+            idx=2
+        elif  (bOrder and bFirst) or ( (not bOrder) and  (not bFirst) ):
             idx = 0
         else:
             idx = 1
